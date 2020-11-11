@@ -1,70 +1,62 @@
-# Getting Started with Create React App
+# Rethink assignment - Large Search
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+- MongoDB is used as the backend database.
+- Server side pagination and search on a large dataset of Companies. Tested with 9500 records. Sample company records from hosted mongodb is used here.
+- React is used for the frontend interface and nodejs with express for the backend.
+- `mongoose` is used for interaction with MongoDB.
 
-## Available Scripts
+# Backend
 
-In the project directory, you can run:
+## Steps to run: Backend
 
-### `npm start`
+**Note:** Run backend first
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+**Configs:** Database connection settings needs to be upated in `backend/.env` file with the following keys
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+Sample values shown below.
+```
+DB_HOST=cluster0-shard1.mongodb.net:27017,cluster0-shard2.mongodb.net:27017,cluster0-shard3.mongodb.net:27017
+DB_USER=abc
+DB_PASS=abc
+DB_COLLECTION=sample_training
+```
 
-### `npm test`
+1. `cd backend`
+2. `npm install`
+3. `npm start`
+4. Default port for backend is `5000`, which can be overridden in `backend/.env` file.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
+# Frontend
 
-### `npm run build`
+## React
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+1. [mui-datatables](https://github.com/gregnb/mui-datatables) is used for data grid. Search and pagination is handled server-side.
+2. Option to show/hide columns on the datagrid.
+3. Search performed across the 4 columns displayed on the grid.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+## Steps to run
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+**Configs:** Server `host` and `port` settings are present in the `.env` file in the root folder.
 
-### `npm run eject`
+Update the `.env` as per the settings of the backend server.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Sample values shown below.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+REACT_APP_SERVER_HOST=http://localhost
+REACT_APP_SERVER_PORT=5000
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+```
 
-## Learn More
+1. In the root folder - `npm install`
+2. `npm start`
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+---
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+# General comments and assumptions
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+1. On each key-stroke, API request is sent to the server with  `searchText` and `page` number to load the respective page.
+2. Search is done across all 4 columns shown on the grid using `regex` operator of mongodb.
+3. Only read/search operation is supported in this interface.
