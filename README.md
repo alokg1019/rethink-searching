@@ -5,6 +5,12 @@
 - React is used for the frontend interface and nodejs with express for the backend.
 - `mongoose` is used for interaction with MongoDB.
 
+All records
+![all records](all_records.png)
+
+Record searching
+![search text](search_text.png)
+
 # Backend
 
 ## Steps to run: Backend
